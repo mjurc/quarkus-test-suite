@@ -37,3 +37,5 @@
 | sql-db/multiple-pus | sql-db/multiple-pus |
 | deployment-strategies/quarkus | http/http-minimum with tag 'use-quarkus-openshift-extension' |
 | deployment-strategies/quarkus-serverless | http/http-minimum with tag 'use-quarkus-openshift-extension' |
+| external-applications/todo-demo-app | external-applications/todo-demo-app |
+| external-applications/quarkus-workshop-super-heroes | external-applications/quarkus-workshop-super-heroes |
