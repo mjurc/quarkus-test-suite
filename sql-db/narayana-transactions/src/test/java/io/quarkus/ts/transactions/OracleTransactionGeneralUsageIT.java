@@ -6,8 +6,10 @@ import io.quarkus.test.scenarios.QuarkusScenario;
 import io.quarkus.test.services.Container;
 import io.quarkus.test.services.QuarkusApplication;
 import io.quarkus.ts.transactions.recovery.TransactionExecutor;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 @QuarkusScenario
+@DisabledIfSystemProperty(named = "ts.arm.missing.services.excludes", matches = "true", disabledReason = "Oracle container is not supported on aarch64.")
 public class OracleTransactionGeneralUsageIT extends TransactionCommons {
 
     static final int ORACLE_PORT = 1521;

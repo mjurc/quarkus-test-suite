@@ -15,9 +15,11 @@ import io.quarkus.test.scenarios.QuarkusScenario;
 import io.quarkus.test.services.DevModeQuarkusApplication;
 import io.quarkus.test.utils.DockerUtils;
 import io.quarkus.test.utils.SocketUtils;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 @QuarkusScenario
 @Tag("podman-incompatible") //TODO: https://github.com/quarkusio/quarkus/issues/38003
+@DisabledIfSystemProperty(named = "ts.arm.missing.services.excludes", matches = "true", disabledReason = "Oracle container is not supported on aarch64.")
 public class DevModeOracleDevServiceUserExperienceIT {
 
     private static final String ORACLE_NAME = getImageName("oracle.image");

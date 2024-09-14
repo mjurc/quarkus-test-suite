@@ -5,8 +5,10 @@ import io.quarkus.test.bootstrap.RestService;
 import io.quarkus.test.scenarios.QuarkusScenario;
 import io.quarkus.test.services.Container;
 import io.quarkus.test.services.QuarkusApplication;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 @QuarkusScenario
+@DisabledIfSystemProperty(named = "ts.arm.missing.services.excludes", matches = "true", disabledReason = "Oracle container is not supported on aarch64.")
 public class OracleDatabaseIT extends AbstractDatabaseHibernateReactiveIT {
 
     private static final String ORACLE_USER = "quarkus_test";
