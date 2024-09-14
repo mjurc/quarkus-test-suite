@@ -16,8 +16,10 @@ import io.quarkus.test.scenarios.annotations.DisabledOnFipsAndJava17;
 import io.quarkus.test.services.DevModeQuarkusApplication;
 import io.quarkus.test.utils.DockerUtils;
 import io.quarkus.test.utils.SocketUtils;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 @DisabledOnFipsAndJava17(reason = "https://github.com/quarkusio/quarkus/issues/40813")
+@DisabledIfSystemProperty(named = "ts.arm.missing.services.excludes", matches = "true", disabledReason = "MS SQL is not supported on aarch64.")
 @Tag("QUARKUS-959")
 @QuarkusScenario
 public class DevModeMssqlDevServicesUserExperienceIT {

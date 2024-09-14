@@ -6,8 +6,10 @@ import org.junit.jupiter.api.Test;
 import io.quarkus.test.bootstrap.RestService;
 import io.quarkus.test.scenarios.QuarkusScenario;
 import io.quarkus.test.services.DevModeQuarkusApplication;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 @Tag("QUARKUS-959")
+@DisabledIfSystemProperty(named = "ts.arm.missing.services.excludes", matches = "true", disabledReason = "MS SQL is not supported on aarch64.")
 @QuarkusScenario
 public class DevModeMssqlIT extends AbstractSqlDatabaseIT {
 
