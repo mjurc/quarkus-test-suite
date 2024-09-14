@@ -8,11 +8,13 @@ import io.quarkus.test.scenarios.QuarkusScenario;
 import io.quarkus.test.scenarios.annotations.DisabledOnNative;
 import io.quarkus.test.services.Container;
 import io.quarkus.test.services.QuarkusApplication;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 @QuarkusScenario
 @DisabledOnNative(reason = "Compatibility mode check in JVM mode is enough for this DB")
 @Tag("fips-incompatible") // Reported in https://github.com/IBM/Db2/issues/43
 @Tag("podman-incompatible") //TODO https://github.com/containers/podman/issues/16432
+@DisabledIfSystemProperty(named = "ts.arm.missing.services.excludes", matches = "true", disabledReason = "MS SQL is not supported on aarch64.")
 public class DB2DatabaseIT extends AbstractSqlDatabaseIT {
 
     @Container(image = "${db2.image}", port = 50000, expectedLog = "Setup has completed")
