@@ -14,7 +14,6 @@ import java.nio.charset.StandardCharsets;
 import org.apache.http.HttpStatus;
 import org.awaitility.Awaitility;
 import org.jboss.logging.Logger;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Tag;
@@ -41,7 +40,7 @@ public class WebSocketsNextMetricsIT {
     private static final String TOTAL_SERVER_MESSAGES_INBOUND_FORMAT = "quarkus_websockets_server_count_total{direction=\"INBOUND\",uri=\"/chat/:username\"} %s.0";
     private static final String TOTAL_SERVER_BYTES_OUTBOUND_FORMAT = "quarkus_websockets_server_bytes_total{direction=\"OUTBOUND\",uri=\"/chat/:username\"} %s.0";
     private static final String TOTAL_SERVER_BYTES_INBOUND_FORMAT = "quarkus_websockets_server_bytes_total{direction=\"INBOUND\",uri=\"/chat/:username\"} %s.0";
-    private static final String TOTAL_SERVER_CONNECTION_ERRORS_FORMAT = "quarkus_websockets_server_connections_opened_errors_total{uri=\"/failing\"} %s.0";
+    private static final String TOTAL_SERVER_CONNECTIONS_ONOPEN_ERRORS_FORMAT = "quarkus_websockets_server_connections_onopen_errors_total{uri=\"/failing\"} %s.0";
     private static final String TOTAL_SERVER_ENDPOINT_ERRORS_FORMAT = "quarkus_websockets_server_endpoint_count_errors_total{uri=\"/failing\"} %s.0";
     private static final String TOTAL_CLIENT_CONNECTIONS_OPEN_FORMAT = "quarkus_websockets_client_connections_opened_total{uri=\"/chat/{username}\"} %s.0";
     private static final String TOTAL_CLIENT_CONNECTIONS_CLOSED_FORMAT = "quarkus_websockets_client_connections_closed_total{uri=\"/chat/{username}\"} %s.0";
@@ -107,11 +106,10 @@ public class WebSocketsNextMetricsIT {
 
     @Test
     @Order(2)
-    @Disabled("https://github.com/quarkusio/quarkus/issues/47409")
     public void serverErrorMetricsTest() throws URISyntaxException, InterruptedException {
         Client client = createClient("/failing");
         getServer().logs().assertContains("Error on websocket: Websocket failed to open");
-        thenCounterIs(TOTAL_SERVER_CONNECTION_ERRORS_FORMAT, 1);
+        thenCounterIs(TOTAL_SERVER_CONNECTIONS_ONOPEN_ERRORS_FORMAT, 1);
         client.send("Create an error");
         getServer().logs().assertContains("Error on websocket: Create an error");
         thenCounterIs(TOTAL_SERVER_ENDPOINT_ERRORS_FORMAT, 1);
